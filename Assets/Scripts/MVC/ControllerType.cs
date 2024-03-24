@@ -7,6 +7,8 @@ namespace BattleFlagGameStudy
   public enum ControllerType
   {
     GameUI,
-    Game
+    Game,
+    Loading,
+    Level,
   }
 }

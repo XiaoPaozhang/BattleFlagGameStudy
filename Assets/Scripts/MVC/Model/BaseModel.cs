@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace BattleFlagGameStudy
 {
-  public class BaseModel : MonoBehaviour
+  public class BaseModel
   {
     public BaseController controller;
+
     public BaseModel(BaseController ctrl)
     {
       this.controller = ctrl;
     }
 
+    public BaseModel() { }
     public virtual void Init() { }
   }
 }

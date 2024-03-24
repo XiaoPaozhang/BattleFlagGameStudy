@@ -61,6 +61,7 @@ namespace BattleFlagGameStudy
       }
     }
 
+    //通过GameApp.controllerManager执行其他控制器事件
     public void ApplyControllerFunc(int controllerKey, string eventName, params object[] args)
     {
       GameApp.controllerManager.ApplyFunc(controllerKey, eventName, args);
@@ -74,6 +75,7 @@ namespace BattleFlagGameStudy
     public void SetModel(BaseModel model)
     {
       this.model = model;
+      this.model.controller = this;
     }
 
     public BaseModel GetModel()
@@ -86,6 +88,7 @@ namespace BattleFlagGameStudy
       return model as T;
     }
 
+    //通过GameApp.controllerManager获取其他控制器model
     public BaseModel GetControllerModel(int controllerKey)
     {
       // 实现控制器间通信
@@ -100,12 +103,9 @@ namespace BattleFlagGameStudy
     }
 
     //初始化模板事件
-    public virtual void InitModuleEvent()
-    {
-    }
+    public virtual void InitModuleEvent() { }
 
-    public virtual void RemoveModuleEvent()
-    { }
+    public virtual void RemoveModuleEvent() { }
 
     public virtual void InitGlobalEvent() { }
 

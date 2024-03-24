@@ -14,6 +14,7 @@ namespace BattleFlagGameStudy
     public string prefabName;
     public Transform parentTf;
     public BaseController controller;
+    public int Sorting_Order;//显示层级 改变显示排序
   }
 
   public class ViewManager
@@ -99,10 +100,16 @@ namespace BattleFlagGameStudy
       if (oldView != null)
       {
         UnRegister(key);
-        oldView.DestroyView();
+        oldView.DestroyView();//执行被销毁的视图的销毁方法
         _viewCache.Remove(key);
+        _openView.Remove(key);
       }
 
+    }
+
+    public void Close(ViewType viewType, params object[] args)
+    {
+      Close((int)viewType, args);
     }
 
     public void Close(int key, params object[] args)
@@ -127,9 +134,9 @@ namespace BattleFlagGameStudy
     }
     public void Open(int key, params object[] args)
     {
-      IBaseView _view = GetView(key);
+      IBaseView view = GetView(key);
       ViewInfo viewInfo = this._views[key];
-      if (_view == null)
+      if (view == null)
       {
         //不存在的视图进行资源加载,实例化
         GameObject uiObj = Object.Instantiate(Resources.Load<GameObject>($"View/{viewInfo.prefabName}"), viewInfo.parentTf);
@@ -143,40 +150,40 @@ namespace BattleFlagGameStudy
           uiObj.AddComponent<GraphicRaycaster>();
         }
         canvas.overrideSorting = true;//可以设置层级
-
+        canvas.sortingOrder = viewInfo.Sorting_Order;//设置层级
         //获取精确类型
         string typeName = ((ViewType)key).ToString();
         string namespaceName = typeof(ViewType).Namespace;
         string assemblyName = typeof(ViewType).Assembly.FullName;
         Type viewType = Type.GetType($"{namespaceName}.{typeName}, {assemblyName}");
 
-        _view = uiObj.AddComponent(viewType) as IBaseView;
+        view = uiObj.AddComponent(viewType) as IBaseView;
 
-        _view.ViewId = key;
-        _view.Controller = viewInfo.controller;
+        view.ViewId = key;
+        view.Controller = viewInfo.controller;
 
-        _viewCache.Add(key, _view);
-        viewInfo.controller.OnLoadView(_view);
+        _viewCache.Add(key, view);
+        viewInfo.controller.OnLoadView(view);
       }
       //如果已经打开了
       if (this._openView.ContainsKey(key))
       {
         return;
       }
-      this._openView.Add(key, _view);
+      this._openView.Add(key, view);
 
-      if (_view.IsInit())
+      if (view.IsInit())
       {
-        _view.SetVisible(true);
-        _view.Open(args);
-        viewInfo.controller.OpenView(_view);
+        view.SetVisible(true);
+        view.Open(args);
+        viewInfo.controller.OpenView(view);
       }
       else
       {
-        _view.InitUI();
-        _view.InitData();
-        _view.Open(args);
-        viewInfo.controller.OpenView(_view);
+        view.InitUI();
+        view.InitData();
+        view.Open(args);
+        viewInfo.controller.OpenView(view);
       }
     }
   }
