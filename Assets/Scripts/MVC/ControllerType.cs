@@ -10,5 +10,6 @@ namespace BattleFlagGameStudy
     Game,
     Loading,
     Level,
+    Fight,
   }
 }

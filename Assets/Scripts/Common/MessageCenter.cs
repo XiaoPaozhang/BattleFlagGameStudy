@@ -42,7 +42,7 @@ namespace BattleFlagGameStudy
     }
 
     //执行事件
-    public void PostRvent(string eventName, object arg = null)
+    public void PostEvent(string eventName, object arg = null)
     {
       if (messageDic.TryGetValue(eventName, out Action<object> action))
       {

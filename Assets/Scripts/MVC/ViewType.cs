@@ -7,5 +7,7 @@ namespace BattleFlagGameStudy
     MessageView,
     LoadingView,
     SelectLevelView,
+    FightView,
+    FightSelectHeroView,
   }
 }

@@ -10,6 +10,7 @@ namespace BattleFlagGameStudy
   {
     public LevelController() : base()
     {
+      SetModel(new LevelModel());
 
       GameApp.viewManager.Register(ViewType.SelectLevelView, new ViewInfo()
       {
@@ -19,6 +20,47 @@ namespace BattleFlagGameStudy
       });
 
       InitModuleEvent();
+      InitGlobalEvent();
+    }
+    public override void Init()
+    {
+      base.Init();
+
+      model.Init();
+    }
+
+    //注册全局事件
+    public override void InitGlobalEvent()
+    {
+      base.InitGlobalEvent();
+
+      GameApp.messageCenter.AddEvent(Defines.ShowLevelDesEvent, OnShowLevelDesCallback);
+      GameApp.messageCenter.AddEvent(Defines.HideLevelDesEvent, OnHideLevelDesCallback);
+    }
+
+
+    //删除全局事件
+    public override void RemoveGlobalEvent()
+    {
+      base.RemoveGlobalEvent();
+
+      GameApp.messageCenter.RemoveEvent(Defines.ShowLevelDesEvent, OnShowLevelDesCallback);
+      GameApp.messageCenter.RemoveEvent(Defines.HideLevelDesEvent, OnHideLevelDesCallback);
+    }
+
+    private void OnShowLevelDesCallback(object obj)
+    {
+      LevelModel levelModel = GetModel<LevelModel>();
+      levelModel.currentLevelData = levelModel.GetLevel(int.Parse(obj.ToString()));
+
+      SelectLevelView selectLevelView = GameApp.viewManager.GetView<SelectLevelView>((int)ViewType.SelectLevelView);
+      selectLevelView.ShowLevelDes();
+    }
+
+    private void OnHideLevelDesCallback(object obj)
+    {
+      SelectLevelView selectLevelView = GameApp.viewManager.GetView<SelectLevelView>((int)ViewType.SelectLevelView);
+      selectLevelView.HideLevelDes();
     }
 
     public override void InitModuleEvent()

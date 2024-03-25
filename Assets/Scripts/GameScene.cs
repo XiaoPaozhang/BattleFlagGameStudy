@@ -62,6 +62,7 @@ namespace BattleFlagGameStudy
       GameApp.controllerManager.Register(ControllerType.Game, new GameController());
       GameApp.controllerManager.Register(ControllerType.Loading, new LoadingController());
       GameApp.controllerManager.Register(ControllerType.Level, new LevelController());
+      GameApp.controllerManager.Register(ControllerType.Fight, new FightController());
     }
 
     void InitModule()

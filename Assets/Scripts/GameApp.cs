@@ -11,6 +11,7 @@ namespace BattleFlagGameStudy
     public static ConfigManager configManager;
     public static CameraManager cameraManager;
     public static MessageCenter messageCenter;
+    public static GameTimer gameTimer;
     public override void OnInit()
     {
       base.OnInit();
@@ -21,6 +22,14 @@ namespace BattleFlagGameStudy
       configManager = new ConfigManager();
       cameraManager = new CameraManager();
       messageCenter = new MessageCenter();
+      gameTimer = new GameTimer();
+    }
+
+    public override void OnUpdate(float deltaTime)
+    {
+      base.OnUpdate(deltaTime);
+
+      gameTimer.OnUpdate(deltaTime);
     }
   }
 }

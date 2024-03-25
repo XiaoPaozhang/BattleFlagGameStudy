@@ -43,10 +43,13 @@ namespace BattleFlagGameStudy
     private void OnLoadedEndCallBack(AsyncOperation operation)
     {
       asyncOperation.completed -= OnLoadedEndCallBack;
-      GameApp.viewManager.Close(ViewType.LoadingView); //关闭加载界面
 
-      GetModel<LoadingModel>().callback?.Invoke(); //执行回调
+      GameApp.gameTimer.RegisterTimer(0.25f, () =>
+      {
+        GetModel<LoadingModel>().callback?.Invoke(); //执行回调
 
+        GameApp.viewManager.Close(ViewType.LoadingView); //关闭加载界面
+      });
     }
   }
 }
