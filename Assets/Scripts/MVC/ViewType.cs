@@ -9,5 +9,6 @@ namespace BattleFlagGameStudy
     SelectLevelView,
     FightView,
     FightSelectHeroView,
+    DragHeroView,
   }
 }

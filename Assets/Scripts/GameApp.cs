@@ -12,6 +12,11 @@ namespace BattleFlagGameStudy
     public static CameraManager cameraManager;
     public static MessageCenter messageCenter;
     public static GameTimer gameTimer;
+    public static FightWorldManager fightWorldManager;
+    public static MapManager mapManager;
+    public static GameDataManager gameDataManager;
+    public static UserInputManager userInputManager;
+
     public override void OnInit()
     {
       base.OnInit();
@@ -23,13 +28,20 @@ namespace BattleFlagGameStudy
       cameraManager = new CameraManager();
       messageCenter = new MessageCenter();
       gameTimer = new GameTimer();
+      fightWorldManager = new FightWorldManager();//战斗状态机
+      mapManager = new MapManager(); //地图管理器
+      gameDataManager = new GameDataManager();
+      userInputManager = new UserInputManager();
     }
 
     public override void OnUpdate(float deltaTime)
     {
       base.OnUpdate(deltaTime);
 
+      userInputManager.Update(deltaTime);
       gameTimer.OnUpdate(deltaTime);
+      fightWorldManager.Update(deltaTime);
+
     }
   }
 }
