@@ -29,18 +29,38 @@ namespace BattleFlagGameStudy
       dirSp = transform.Find("dir").GetComponent<SpriteRenderer>();
 
       GameApp.messageCenter.AddEvent(gameObject, Defines.OnSelectEvent, OnSelectCallback);
+      GameApp.messageCenter.AddEvent(Defines.OnUnSelectEvent, OnUnSelectCallback);
     }
 
     void OnDestroy()
     {
       GameApp.messageCenter.RemoveEvent(gameObject, Defines.OnSelectEvent, OnSelectCallback);
+      GameApp.messageCenter.RemoveEvent(Defines.OnUnSelectEvent, OnUnSelectCallback);
     }
+
+    public void ShowGrid(Color color)
+    {
+      gridSp.enabled = true;
+      gridSp.color = color;
+    }
+
+    public void HideGrid()
+    {
+      gridSp.enabled = false;
+    }
+
+
 
     //注意:当瓦片被选中时
     void OnSelectCallback(object obj)
     {
       //执行所有英雄的取消选中
       GameApp.messageCenter.PostEvent(Defines.OnUnSelectEvent);
+    }
+
+    void OnUnSelectCallback(object obj)
+    {
+      dirSp.sprite = null;
     }
 
     private void OnMouseEnter()
@@ -53,6 +73,15 @@ namespace BattleFlagGameStudy
     {
       selectSp.enabled = false;
     }
+
+
+    //设置箭头方向的图片资源 和 颜色
+    public void SetDirSp(Sprite sp, Color color)
+    {
+      dirSp.sprite = sp;
+      dirSp.color = color;
+    }
+
   }
 }
 

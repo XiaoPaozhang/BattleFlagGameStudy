@@ -9,7 +9,6 @@ namespace BattleFlagGameStudy
     private Dictionary<string, Action<object>> messageDic;  //存储普通的消息字典
     private Dictionary<string, Action<object>> tempMsgDic;  //存储临时消息字典,施行后置空
     private Dictionary<object, Dictionary<string, Action<object>>> objMsgDic;  //存储对象消息字典
-
     public MessageCenter()
     {
       messageDic = new Dictionary<string, Action<object>>();
@@ -94,8 +93,6 @@ namespace BattleFlagGameStudy
         action?.Invoke(arg);
       }
     }
-
-
 
     //执行对象的监听事件
     public void PostEvent(object listenerObj, string eventName, object arg = null)

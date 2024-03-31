@@ -31,6 +31,30 @@ namespace BattleFlagGameStudy
         Sorting_Order = 2,
       });
 
+      GameApp.viewManager.Register(ViewType.TipView, new ViewInfo()
+      {
+        prefabName = "TipView",
+        controller = this,
+        parentTf = GameApp.viewManager.worldCanvasTf,//设置到世界画布
+        Sorting_Order = 2,
+      });
+
+      GameApp.viewManager.Register(ViewType.HeroDesView, new ViewInfo()
+      {
+        prefabName = "HeroDesView",
+        controller = this,
+        parentTf = GameApp.viewManager.worldCanvasTf,//设置到世界画布
+        Sorting_Order = 2,
+      });
+
+      GameApp.viewManager.Register(ViewType.EnemyDesView, new ViewInfo()
+      {
+        prefabName = "EnemyDesView",
+        controller = this,
+        parentTf = GameApp.viewManager.worldCanvasTf,//设置到世界画布
+        Sorting_Order = 2,
+      });
+
       InitModuleEvent();
     }
 

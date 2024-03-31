@@ -19,5 +19,35 @@ namespace BattleFlagGameStudy
       this.CurHp = this.MaxHp;
 
     }
+
+    protected override void OnSelectCallback(object args)
+    {
+      //玩家回合 才能选中角色
+      if (GameApp.fightWorldManager.state == GameState.Player)
+      {
+        if (HasMovementCompleted)
+        {
+          return;
+        }
+        if (GameApp.commandManager.IsRunningCommand)
+        {
+          return;
+        }
+
+        //添加显示路径的指令
+        GameApp.commandManager.AddCommand(new ShowPathCommand(this));
+
+        base.OnSelectCallback(args);
+
+        GameApp.viewManager.Open(ViewType.HeroDesView, this);
+      }
+    }
+
+    protected override void OnUnSelectCallback(object args)
+    {
+      base.OnUnSelectCallback(args);
+
+      GameApp.viewManager.Close(ViewType.HeroDesView);
+    }
   }
 }

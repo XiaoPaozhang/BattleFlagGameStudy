@@ -10,5 +10,8 @@ namespace BattleFlagGameStudy
     FightView,
     FightSelectHeroView,
     DragHeroView,
+    TipView,
+    HeroDesView,
+    EnemyDesView,
   }
 }

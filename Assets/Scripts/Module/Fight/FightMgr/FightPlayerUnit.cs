@@ -4,16 +4,17 @@ using UnityEngine;
 
 namespace BattleFlagGameStudy
 {
-  public class FightEnter : FightUnitBase
+  /// <summary>
+  /// 玩家的回合
+  /// </summary>
+  public class FightPlayerUnit : FightUnitBase
   {
     public override void Init()
     {
       base.Init();
 
-      GameApp.mapManager.Init();
-
-      //进入战斗
-      GameApp.fightWorldManager.EnterFight();
+      GameApp.viewManager.Open(ViewType.TipView, "玩家回合");
     }
+
   }
 }

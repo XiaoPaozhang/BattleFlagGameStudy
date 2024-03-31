@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BattleFlagGameStudy
 {
@@ -9,6 +10,31 @@ namespace BattleFlagGameStudy
   /// </summary>
   public class FightSelectHeroView : BaseView
   {
+    protected override void OnAwake()
+    {
+      base.OnAwake();
+
+      Find<Button>("bottom/startBtn").onClick.AddListener(OnFightBtn);
+    }
+
+    //选择完英雄,开始进入到玩家回合
+    private void OnFightBtn()
+    {
+      //如果一个英雄都没选,要提示玩家
+      if (GameApp.fightWorldManager.heroes.Count == 0)
+      {
+        Debug.Log("未选择英雄");
+        return;
+      }
+      else
+      {
+        GameApp.viewManager.Close(ViewId);
+
+        //切换到 玩家回合
+        GameApp.fightWorldManager.ChangeState(GameState.Player);
+      }
+    }
+
     public override void Open(params object[] args)
     {
       base.Open(args);

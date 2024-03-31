@@ -21,5 +21,12 @@ namespace BattleFlagGameStudy
       callback?.Invoke(collider2D);
 
     }
+
+    public static Collider2D ScreenPointToRay2D(Camera camera, Vector2 mousePos)
+    {
+      Vector3 worldPos = camera.ScreenToWorldPoint(mousePos);
+      Collider2D collider2D = Physics2D.OverlapCircle(worldPos, 0.02f);
+      return collider2D;
+    }
   }
 }
