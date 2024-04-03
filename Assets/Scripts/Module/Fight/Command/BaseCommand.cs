@@ -12,6 +12,8 @@ namespace BattleFlagGameStudy
   {
     public ModelBase model;//命令的对象
     protected bool isFinish;//命令是否完成
+
+    public BaseCommand() { }
     public BaseCommand(ModelBase model)
     {
       this.model = model;

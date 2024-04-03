@@ -202,6 +202,50 @@ namespace BattleFlagGameStudy
 
       return dir;
     }
-  }
 
+    public void SHowAttackStep(ModelBase model, int attackStep, Color color)
+    {
+      int minRow = model.RowIndex - attackStep >= 0 ? model.RowIndex - attackStep : 0;
+      int minCol = model.ColIndex - attackStep >= 0 ? model.ColIndex - attackStep : 0;
+      int maxRow = model.RowIndex + attackStep > RowCount - 1 ? RowCount - 1 : model.RowIndex + attackStep;
+      int maxCol = model.ColIndex + attackStep > ColCount - 1 ? ColCount - 1 : model.ColIndex + attackStep;
+
+      for (int i = minRow; i <= maxRow; i++)
+      {
+        for (int j = minCol; j <= maxCol; j++)
+        {
+          if (Mathf.Abs(model.RowIndex - i) + Mathf.Abs(model.ColIndex - j) <= attackStep)
+          {
+            mapArr[i, j].ShowGrid(color);
+          }
+        }
+      }
+    }
+
+    public void HideAttackStep(ModelBase model, int attackStep)
+    {
+      int minRow = model.RowIndex - attackStep >= 0 ? model.RowIndex - attackStep : 0;
+      int minCol = model.ColIndex - attackStep >= 0 ? model.ColIndex - attackStep : 0;
+      int maxRow = model.RowIndex + attackStep > RowCount - 1 ? RowCount - 1 : model.RowIndex + attackStep;
+      int maxCol = model.ColIndex + attackStep > ColCount - 1 ? ColCount - 1 : model.ColIndex + attackStep;
+
+      for (int i = minRow; i <= maxRow; i++)
+      {
+        for (int j = minCol; j <= maxCol; j++)
+        {
+          if (Mathf.Abs(model.RowIndex - i) + Mathf.Abs(model.ColIndex - j) <= attackStep)
+          {
+            mapArr[i, j].HideGrid();
+          }
+        }
+      }
+    }
+
+    //清空
+    public void clear()
+    {
+      mapArr = null;
+      dirSpArr.Clear();
+    }
+  }
 }

@@ -13,7 +13,10 @@ namespace BattleFlagGameStudy
     {
       base.Init();
 
+      GameApp.fightWorldManager.ResetEnemies();//重置敌人行动
+
       GameApp.viewManager.Open(ViewType.TipView, "玩家回合");
+
     }
 
   }

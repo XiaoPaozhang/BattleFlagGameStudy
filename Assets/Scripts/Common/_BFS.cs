@@ -1,5 +1,7 @@
+
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace BattleFlagGameStudy
 {
@@ -114,5 +116,43 @@ namespace BattleFlagGameStudy
         temps.Add(p);
       }
     }
+
+    //寻找可移动的点 离终点最近的点的路径集合
+    public List<Point> FindMinPath(ModelBase model, int step, int endRowIndex, int endColIndex)
+    {
+      List<Point> result = Search(model.RowIndex, model.ColIndex, step);
+
+      if (result.Count == 0)
+      {
+        return null;
+      }
+      else
+      {
+        Point minPoint = result[0];//默认一个点为离目标点距离最近
+        int mid_dis = Mathf.Abs(minPoint.RowIndex - endColIndex) + Mathf.Abs(minPoint.ColIndex - endColIndex);
+
+        for (int i = 1; i < result.Count; i++)
+        {
+          int temp_dis = Mathf.Abs(result[i].RowIndex - endRowIndex) + Mathf.Abs(result[i].ColIndex - endColIndex);
+          if (temp_dis < mid_dis)
+          {
+            mid_dis = temp_dis;
+            minPoint = result[i];
+          }
+        }
+
+        //找到了离目标点最近的点 开始回溯路径
+        List<Point> paths = new List<Point>();
+        Point current = minPoint.Father;
+        while (current != null)
+        {
+          paths.Add(current);
+          current = current.Father;
+        }
+        paths.Reverse();
+        return paths;
+      }
+    }
   }
 }
+

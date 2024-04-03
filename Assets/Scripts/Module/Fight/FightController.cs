@@ -8,6 +8,8 @@ namespace BattleFlagGameStudy
   {
     public FightController() : base()
     {
+      SetModel(new FightModel(this));
+
       GameApp.viewManager.Register(ViewType.FightView, new ViewInfo()
       {
         prefabName = "FightView",
@@ -35,7 +37,7 @@ namespace BattleFlagGameStudy
       {
         prefabName = "TipView",
         controller = this,
-        parentTf = GameApp.viewManager.worldCanvasTf,//设置到世界画布
+        parentTf = GameApp.viewManager.canvasTf,
         Sorting_Order = 2,
       });
 
@@ -43,7 +45,7 @@ namespace BattleFlagGameStudy
       {
         prefabName = "HeroDesView",
         controller = this,
-        parentTf = GameApp.viewManager.worldCanvasTf,//设置到世界画布
+        parentTf = GameApp.viewManager.canvasTf,
         Sorting_Order = 2,
       });
 
@@ -51,13 +53,50 @@ namespace BattleFlagGameStudy
       {
         prefabName = "EnemyDesView",
         controller = this,
-        parentTf = GameApp.viewManager.worldCanvasTf,//设置到世界画布
+        parentTf = GameApp.viewManager.canvasTf,
         Sorting_Order = 2,
+      });
+
+      GameApp.viewManager.Register(ViewType.SelectOptionView, new ViewInfo()
+      {
+        prefabName = "SelectOptionView",
+        controller = this,
+        parentTf = GameApp.viewManager.canvasTf,
+      });
+
+      GameApp.viewManager.Register(ViewType.FightOptionDesView, new ViewInfo()
+      {
+        prefabName = "FightOptionDesView",
+        controller = this,
+        parentTf = GameApp.viewManager.canvasTf,
+        Sorting_Order = 3
+      });
+
+      GameApp.viewManager.Register(ViewType.WinView, new ViewInfo()
+      {
+        prefabName = "WinView",
+        controller = this,
+        parentTf = GameApp.viewManager.canvasTf,
+        Sorting_Order = 3
+      });
+
+      GameApp.viewManager.Register(ViewType.LossView, new ViewInfo()
+      {
+        prefabName = "LossView",
+        controller = this,
+        parentTf = GameApp.viewManager.canvasTf,
+        Sorting_Order = 3
       });
 
       InitModuleEvent();
     }
 
+    public override void Init()
+    {
+      base.Init();
+
+      model.Init();
+    }
     public override void InitModuleEvent()
     {
       base.InitModuleEvent();

@@ -29,7 +29,11 @@ namespace BattleFlagGameStudy
         }
         else
         {
-          // GameApp.messageCenter.PostEvent(Defines.OnUnSelectEvent);
+          GameApp.messageCenter.PostEvent(Defines.OnUnSelectEvent);
+
+          //不移动直接显示操作选项
+          //显示选项界面
+          GameApp.viewManager.Open(ViewType.SelectOptionView, this.model.data["Event"], (Vector2)this.model.transform.position);
         }
         return true;
       }

@@ -110,7 +110,7 @@ namespace BattleFlagGameStudy
     {
       if (tempMsgDic.ContainsKey(msgName))
       {
-        tempMsgDic[msgName] += callback;
+        tempMsgDic[msgName] = callback;
       }
       else
       {

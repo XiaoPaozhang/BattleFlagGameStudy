@@ -75,6 +75,20 @@ namespace BattleFlagGameStudy
       bgmSource.Play();
     }
 
+    public void PlayEffect(string clipName, Vector3 pos)
+    {
+      //如果当前音乐已暂停，则不播放
+      if (isStop)
+        return;
+
+      AudioClip clip;
+      if (!cachePlayedClips.ContainsKey(clipName))
+      {
+        clip = Resources.Load<AudioClip>($"Sounds/{clipName}");
+        cachePlayedClips.Add(clipName, clip);
+      }
+      AudioSource.PlayClipAtPoint(cachePlayedClips[clipName], pos);
+    }
   }
 }
 

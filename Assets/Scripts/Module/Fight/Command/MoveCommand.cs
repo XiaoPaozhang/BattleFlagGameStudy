@@ -49,6 +49,8 @@ namespace BattleFlagGameStudy
           this.model.PlayAni("idle");
           GameApp.mapManager.ChangeBlockType(this.currentPoint.RowIndex, this.currentPoint.ColIndex, BlockType.Obstacle);
 
+          //显示选项界面
+          GameApp.viewManager.Open(ViewType.SelectOptionView, this.model.data["Event"], (Vector2)this.model.transform.position);
           return true;
         }
       }

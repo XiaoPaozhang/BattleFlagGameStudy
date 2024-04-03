@@ -56,6 +56,11 @@ namespace BattleFlagGameStudy
     {
       //执行所有英雄的取消选中
       GameApp.messageCenter.PostEvent(Defines.OnUnSelectEvent);
+
+      if (GameApp.commandManager.IsRunningCommand == false)
+      {
+        GameApp.viewManager.Open(ViewType.FightOptionDesView);
+      }
     }
 
     void OnUnSelectCallback(object obj)

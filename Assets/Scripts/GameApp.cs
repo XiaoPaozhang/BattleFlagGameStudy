@@ -17,6 +17,7 @@ namespace BattleFlagGameStudy
     public static GameDataManager gameDataManager;
     public static UserInputManager userInputManager;
     public static CommandManager commandManager;
+    public static SkillManager skillManager;
 
     public override void OnInit()
     {
@@ -34,6 +35,7 @@ namespace BattleFlagGameStudy
       gameDataManager = new GameDataManager();
       userInputManager = new UserInputManager();
       commandManager = new CommandManager(); //命令管理器
+      skillManager = new SkillManager(); //技能管理器
     }
 
     public override void OnUpdate(float deltaTime)
@@ -44,6 +46,7 @@ namespace BattleFlagGameStudy
       gameTimer.OnUpdate(deltaTime);
       fightWorldManager.Update(deltaTime);
       commandManager.Update(deltaTime);
+      skillManager.Update(deltaTime);
 
     }
   }

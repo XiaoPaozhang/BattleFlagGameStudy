@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -184,6 +186,26 @@ namespace BattleFlagGameStudy
         view.InitData();
         view.Open(args);
         viewInfo.controller.OpenView(view);
+      }
+    }
+
+    public void ShowHitNum(string num, Color color, Vector3 pos)
+    {
+      GameObject obj = Object.Instantiate(Resources.Load("View/HitNum"), worldCanvasTf) as GameObject;
+      obj.transform.position = pos;
+      obj.transform.DOMove(pos + Vector3.up * 1.75f, 0.65f).SetEase(Ease.OutBack);
+      Object.Destroy(obj, 0.75f);
+      Text text = obj.GetComponent<Text>();
+      text.text = num;
+      text.color = color;
+    }
+
+    public void CloseAll()
+    {
+      List<IBaseView> views = _openView.Values.ToList();
+      for (int i = views.Count - 1; i >= 0; i--)
+      {
+        Close(views[i].ViewId);
       }
     }
   }

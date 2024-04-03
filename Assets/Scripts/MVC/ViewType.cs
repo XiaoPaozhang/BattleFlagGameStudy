@@ -13,5 +13,9 @@ namespace BattleFlagGameStudy
     TipView,
     HeroDesView,
     EnemyDesView,
+    SelectOptionView,
+    FightOptionDesView,
+    WinView,
+    LossView,
   }
 }

@@ -30,7 +30,7 @@ namespace BattleFlagGameStudy
       get => hasMovementCompleted;
       set
       {
-        stopObj.SetActive(!value);
+        stopObj.SetActive(value);
 
         if (value)
         {
@@ -44,6 +44,7 @@ namespace BattleFlagGameStudy
         hasMovementCompleted = value;
       }
     }
+
     void Awake()
     {
       bodySprite = transform.Find("body").GetComponent<SpriteRenderer>();
@@ -75,7 +76,7 @@ namespace BattleFlagGameStudy
 
     protected virtual void OnSelectCallback(object args)
     {
-      Debug.Log($"<color=yellow>{gameObject.name}OnSelectCallback</color>");
+      // Debug.Log($"<color=yellow>{gameObject.name}OnSelectCallback</color>");
       //执行未选中
       GameApp.messageCenter.PostEvent(Defines.OnUnSelectEvent);
 
@@ -114,7 +115,7 @@ namespace BattleFlagGameStudy
       }
 
       //如果离目的地很近 返回 true
-      if (Vector3.Distance(transform.position, toPos) < 0.02f)
+      if (Vector3.Distance(transform.position, toPos) <= 0.02f)
       {
         this.RowIndex = rowIndex;
         this.ColIndex = colIndex;
@@ -129,6 +130,42 @@ namespace BattleFlagGameStudy
     public void PlayAni(string name)
     {
       ani.Play(name);
+    }
+
+    //受伤
+    public virtual void GetHit(ISkill skill)
+    {
+    }
+    //播放特效(物体)
+    public virtual void PlayEffect(string effectName)
+    {
+      GameObject obj = Instantiate(Resources.Load($"Effect/{effectName}")) as GameObject;
+      obj.transform.position = transform.position;
+    }
+
+    //计算两个model的距离(根据行列下表计算)
+    public float GetDis(ModelBase modelBase)
+    {
+      return Mathf.Abs(modelBase.RowIndex - RowIndex) + Mathf.Abs(modelBase.ColIndex - ColIndex);
+    }
+
+    //播放音效(攻击 受伤等)
+    public void PlaySound(string soundName)
+    {
+      GameApp.soundManager.PlayEffect(soundName, transform.position);
+    }
+
+    //看向某个model
+    public void LookAtModel(ModelBase modelBase)
+    {
+      if ((modelBase.transform.position.x > transform.position.x) && (transform.lossyScale.x < 0))
+      {
+        Flip();
+      }
+      else if ((modelBase.transform.position.x < transform.position.x) && (transform.lossyScale.x > 0))
+      {
+        Flip();
+      }
     }
   }
 }

@@ -1,6 +1,5 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BattleFlagGameStudy
@@ -10,6 +9,8 @@ namespace BattleFlagGameStudy
     Idle,
     FightEnter,
     Player,
+    Enemy,
+    GameOver,
   }
   /// <summary>
   /// 战斗管理器（用于管理战斗相关的实体（敌人英雄地图格子等））
@@ -60,6 +61,12 @@ namespace BattleFlagGameStudy
         case GameState.Player:
           _current = new FightPlayerUnit();
           break;
+        case GameState.Enemy:
+          _current = new FightEnemyUnit();
+          break;
+        case GameState.GameOver:
+          _current = new FightGameOverUnit();
+          break;
         default:
           break;
       }
@@ -98,6 +105,82 @@ namespace BattleFlagGameStudy
       //这个位置呗占领了 设置方块的类型为障碍物
       b.blockType = BlockType.Obstacle;
       heroes.Add(hero);
+    }
+
+    //移除敌人
+    public void RemoveEnemy(Enemy enemy)
+    {
+      enemies.Remove(enemy);
+
+      GameApp.mapManager.ChangeBlockType(enemy.RowIndex, enemy.ColIndex, BlockType.Null);
+
+      if (enemies.Count == 0)
+      {
+        ChangeState(GameState.GameOver);
+      }
+    }
+
+    //移除英雄
+    public void RemoveHero(Hero hero)
+    {
+      heroes.Remove(hero);
+      GameApp.mapManager.ChangeBlockType(hero.RowIndex, hero.ColIndex, BlockType.Null);
+
+      if (heroes.Count == 0)
+      {
+        ChangeState(GameState.GameOver);
+      }
+    }
+
+    //重置英雄行动
+    public void ResetHeros()
+    {
+      for (int i = 0; i < heroes.Count; i++)
+      {
+        heroes[i].HasMovementCompleted = false;
+      }
+    }
+
+    //重置敌人行动
+    public void ResetEnemies()
+    {
+      for (int i = 0; i < enemies.Count; i++)
+      {
+        enemies[i].HasMovementCompleted = false;
+      }
+    }
+
+    /// <summary>
+    /// 获得离目标最近的英雄
+    /// </summary>
+    /// <param name="targetModel"></param>
+    /// <returns></returns>
+    public ModelBase GetMinDisHero(ModelBase targetModel)
+    {
+      if (heroes.Count == 0)
+        return null;
+
+      Hero hero = heroes[0];
+      float min_dis = hero.GetDis(targetModel);
+
+      for (int i = 1; i < heroes.Count; i++)
+      {
+        float dis = heroes[i].GetDis(targetModel);
+        if (dis < min_dis)
+        {
+          min_dis = dis;
+          hero = heroes[i];
+        }
+      }
+      return hero;
+    }
+
+    //卸载资源
+    public void ReLoadRes()
+    {
+      heroes.Clear();
+      enemies.Clear();
+      GameApp.mapManager.clear();
     }
   }
 }
