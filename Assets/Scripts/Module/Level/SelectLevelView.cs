@@ -25,6 +25,7 @@ namespace BattleFlagGameStudy
       loadingModel.SceneName = "game";
       loadingModel.callback = () =>
       {
+        GameApp.soundManager.PlayBGM("login");//播放登录音乐
         //打开开始界面
         Controller.ApplyControllerFunc(ControllerType.GameUI, Defines.OpenStartView);
       };
@@ -56,7 +57,9 @@ namespace BattleFlagGameStudy
       loadingModel.SceneName = Controller.GetModel<LevelModel>().currentLevelData.SceneName;//切换到战斗场景
       loadingModel.callback = () =>
       {
-        //摄像机位置充值
+        GameApp.soundManager.PlayBGM("fightbgm");//播放战斗音乐
+
+        //摄像机位置重置
         GameApp.cameraManager.ResetPosition();
 
         //打开战斗界面之后执行

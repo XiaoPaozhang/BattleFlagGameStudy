@@ -25,6 +25,7 @@ namespace BattleFlagGameStudy
       loadingModel.SceneName = "map";
       loadingModel.callback = () =>
       {
+        GameApp.soundManager.PlayBGM("mapbgm");//播放map音乐
         //打开选择界面
         Controller.ApplyControllerFunc(ControllerType.Level, Defines.OpenSelectLevelView);
       };
